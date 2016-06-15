@@ -1,0 +1,19 @@
+{
+  "name": "express-static-compiler",
+  "version": "1.0.0",
+  "description": "It server static files like express.static and have preprocess, process, postprocess handlers for build or transpile before send.",
+  "main": "index.js",
+  "dependencies": {
+    "ms": "^0.7.1"
+  },
+  "devDependencies": {
+    "express": "^4.13.4",
+    "less": "^2.7.1"
+  },
+  "scripts": {
+    "demo-less": "node ./demo-less/server.js",
+    "demo-csv": "node ./demo-csv/server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
