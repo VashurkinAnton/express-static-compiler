@@ -61,14 +61,14 @@ The root argument refers to the root directory from which the static assets are 
 The following table describes the properties of the options object.
 
 | Property      | Description                                                                                                                        | Type     | Default  |
-|---------------|------------------------------------------------------------------------------------------------------------------------------------|----------|----------|
-| dotfiles      | Determines how dotfiles (files or directories that begin with a dot “.”) are treated. See [dotfiles](#dotfiles) below.                        | String   | "ignore" |
-| extensions    | Sets the allowed file extensions. Array with regular expressions or string. See [extensions](#extensions) below.                                | Array    | []       |
-| fallthrough   | Let client errors fall-through as unhandled requests, otherwise forward a client error. See [fallthrough](#fallthrough) below.                   | Boolean  | true     |
+|---------------|:-----------------------------------------------------------------------------------------------------------------------------------|----------|----------|
+| dotfiles      | Determines how dotfiles (files or directories that begin with a dot “.”) are treated. See [dotfiles](#dotfiles) below.             | String   | "ignore" |
+| extensions    | Sets the allowed file extensions. Array with regular expressions or string. See [extensions](#extensions) below.                   | Array    | []       |
+| fallthrough   | Let client errors fall-through as unhandled requests, otherwise forward a client error. See [fallthrough](#fallthrough) below.     | Boolean  | true     |
 | lastModified  | Set the Last-Modified header to the last modified date of the file on the OS.                                                      | Boolean  | true     |
 | maxAge        | Set the max-age property of the Cache-Control header in milliseconds or a string in [ms format](https://www.npmjs.com/package/ms). | Number   | 0        |
-| setHeaders    | Function for setting HTTP headers to serve with the file. See [setHeaders](#setheaders) below.                                                  | Function |          |
-| preprocess    | Property name in express response object with preprocessed file data. See [processing](#processing) below.                                      | String   |          |
+| setHeaders    | Function for setting HTTP headers to serve with the file. See [setHeaders](#setheaders) below.                                     | Function |          |
+| preprocess    | Property name in express response object with preprocessed file data. See [processing](#processing) below.                         | String   |          |
 | postprocess   | Property name in express response object for saving processor result.                                                              | String   |          |
 | processor     | Function for processing file data, before sending or moving to the next middleware.                                                | Function |          |
 | processorType | Flag for getting result from processor.                                                                                            | String   | "async"  |
