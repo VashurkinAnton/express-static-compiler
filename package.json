@@ -6,6 +6,10 @@
   "dependencies": {
     "ms": "^0.7.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VashurkinAnton/express-static-compiler.git"
+  },
   "devDependencies": {
     "express": "^4.13.4",
     "less": "^2.7.1"
