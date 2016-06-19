@@ -38,12 +38,12 @@ module.exports = function(root, options){
 			return function(_path){
 				return path.extname(_path) === extension;
 			};
-		}else if(extension === "object" && extension instanceof RegExp){
+		}else if(type === "object" && extension instanceof RegExp){
 			return function(_path){
 				return extension.test(_path);
 			};
 		}
-	});
+	}).filter(Boolean);
 
 	var fallthrough = options.fallthrough === false ? false : true;
 	var lastModified = options.lastModified === false ? false : true;
