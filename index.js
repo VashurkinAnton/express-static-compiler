@@ -38,7 +38,7 @@ module.exports = function(root, options){
 			return function(_path){
 				return path.extname(_path) === extension;
 			};
-		}else if(extensions[i] === "object" && extensions[i] instanceof RegExp){
+		}else if(extension === "object" && extension instanceof RegExp){
 			return function(_path){
 				return extension.test(_path);
 			};
