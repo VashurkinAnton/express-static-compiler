@@ -56,6 +56,7 @@ module.exports = function(root, options){
 	var postprocess = options.postprocess;
 	var processor = options.processor;
 	var processorType = options.processorType || 'async';
+	var pathProcessor = options.pathProcessor;
 
  	function readFile(file, successCb, statsErrorCb, readErrorCb, req){
  		var existPreprocessedData;
@@ -104,6 +105,12 @@ module.exports = function(root, options){
 
 		if(_path[0] === "/"){ 
 			_path = _path.substring(1); 
+		}
+		if(pathProcessor){
+			_path = pathProcessor(_path);
+			if(!_path){
+				res.status(500).send('Incorrect path: "' + _path + '", check you path processor.');
+			}
 		}
 		var file = path.resolve(root, _path)
 		readFile(file, function(data, stats){

@@ -72,6 +72,7 @@ The following table describes the properties of the options object.
 | postprocess   | Property name in express response object for saving processor result.                                                              | String   |          |
 | processor     | Function for processing file data, before sending or moving to the next middleware.                                                | Function |          |
 | processorType | Flag for getting result from processor.                                                                                            | String   | "async"  |
+| pathProcessor | Function for preprocessing path before reading from file system. See [pathProcessor](#pathProcessor) below.                        | Function |          |
 
 ### dotfiles
 Possible values for this option are:
@@ -133,12 +134,50 @@ server.use('/static', staticCompiler('static', {
 server.listen('8080');
 ```
 
+### pathProcessor
+
+Path processor can be used for change file extension for development. Like the next example:
+
+```js
+var less = require('less');
+var express = require('express');
+var server = express();
+
+var PRODUCTION = process.env.NODE_ENV === 'production';
+
+var staticCompiler = require('express-static-compiler');
+
+if(PRODUCTION){
+	server.use('/style', express.static('./styles/css', {extensions: [".css"]})); // use compiled styles
+}else{
+	server.use('/style', staticCompiler('./styles/less', { //use compilation in runtime 
+		extensions: [".css", ".less"],
+		processor: function(data, cb){
+			less.render(data, function (e, output) {
+				cb(e, output ? output.css : null);
+			});
+		},
+		pathProcessor: function(path){
+			return path.replace(/\.css$/, '.less');
+		}	
+	}));
+}
+
+server.listen('8080');
+```
+
 For async value see example with less above.
 
 # ToDo
 
 - Add server cache
 - Add hash query and hash params into processor
+
+# Change log
+
+1.0.5
+
+- Added path processor
 
 # Licence
 
