@@ -85,13 +85,13 @@ module.exports = function(root, options){
  			});
 		}
 	}
-
+	var send;
 	if(!postprocess){
-		function send(req, res, next, data){
+		send = function(req, res, next, data){
 			res.send(data);
 		}
 	}else{
-		function send(req, res, next, data, stats){
+		send = function(req, res, next, data, stats){
 			req[postprocess] = {
 				data: data,
 				stats: stats
