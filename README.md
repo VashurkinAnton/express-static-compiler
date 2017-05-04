@@ -16,7 +16,7 @@ var staticCompiler = require('express-static-compiler');
 
 server.use('/static', staticCompiler('static', {
 	extensions: [".less"],
-	processor: function(data, cb){
+	processor: function(data, cb, filename, req){
 		less.render(data, function (e, output) {
 			cb(e, output ? output.css : null);
 		});
@@ -124,7 +124,7 @@ var staticCompiler = require('express-static-compiler');
 server.use('/static', staticCompiler('static', {
 	extensions: [".csv"],
 	processorType: "sync",
-	processor: function(data){
+	processor: function(data, filename, req){
 		return JSON.stringify(data.split('\n').map(function(row){
 			return row.split(',');
 		}));

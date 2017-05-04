@@ -126,11 +126,11 @@ module.exports = function(root, options){
 
 			if(processor instanceof Function){
 				if(processorType === 'sync'){
-					send(req, res, next, processor(data, file), stats);
+					send(req, res, next, processor(data, file, req), stats);
 				}else{
 					processor(data, function(err, processorResult){
 						send(req, res, next, err || processorResult, stats);
-					}, file);
+					}, file, req);
 				}
 			}else{
 				send(req, res, next, processor(data), stats);
