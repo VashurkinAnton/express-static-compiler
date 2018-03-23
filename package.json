@@ -1,6 +1,6 @@
 {
   "name": "express-static-compiler",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "It server static files like express.static and have preprocess, process, postprocess handlers for build or transpile before send.",
   "main": "index.js",
   "dependencies": {

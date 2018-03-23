@@ -88,12 +88,20 @@ module.exports = function(root, options){
 	var send;
 	if(!postprocess){
 		send = function(req, res, next, data){
-			res.send(data);
+			if(data.err){
+				return res.status(data.err.status || 500).send(data.err);
+			}
+
+			res.send(data.result);
 		}
 	}else{
 		send = function(req, res, next, data, stats){
+			if(data.err){
+				return res.status(data.err.status || 500).send(data.err);
+			}
+
 			req[postprocess] = {
-				data: data,
+				data: data.result,
 				stats: stats
 			};
 			next();
@@ -120,20 +128,32 @@ module.exports = function(root, options){
 			if(maxAge !== undefined){
 				res.header("Cache-Control", "max-age=" + maxAge);
 			}
-			if(setHeaders && setHeaders instanceof Function){
-				setHeaders(res, file, stats);
-			}
 
 			if(processor instanceof Function){
 				if(processorType === 'sync'){
-					send(req, res, next, processor(data, file, req), stats);
+					var processorResult, err;
+					try{
+						processorResult = processor(data, file, req)
+					}catch(e){
+						err = e;
+					}
+
+					if(setHeaders && setHeaders instanceof Function){
+						setHeaders(res, file, stats, err);
+					}
+
+					send(req, res, next, {err: err, result: processorResult}, stats);
 				}else{
 					processor(data, function(err, processorResult){
-						send(req, res, next, err || processorResult, stats);
+						if(setHeaders && setHeaders instanceof Function){
+							setHeaders(res, file, stats, err);
+						}
+
+						send(req, res, next, {err: err, result: processorResult}, stats);
 					}, file, req);
 				}
 			}else{
-				send(req, res, next, processor(data), stats);
+				send(req, res, next, data, stats);
 			}
 
 		}, function(err){
